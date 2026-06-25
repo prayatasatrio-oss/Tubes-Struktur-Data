@@ -47,3 +47,13 @@ Pegawai* cariMin(Pegawai* root) {
 
     return root;
 }
+
+Pegawai* cariData(Pegawai* root, int id) {
+    if (root == NULL || root->id == id)
+        return root;
+
+    if (root->id < id)
+        return cariData(root->right, id);
+
+    return cariData(root->left, id);
+}

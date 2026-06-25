@@ -48,6 +48,51 @@ Pegawai* cariMin(Pegawai* root) {
     return root;
 }
 
+Pegawai* hapusData(Pegawai* root, int id) {
+
+    if (root == NULL)
+        return NULL;
+
+    if (id < root->id)
+        root->left = hapusData(root->left, id);
+
+    else if (id > root->id)
+        root->right = hapusData(root->right, id);
+
+    else {
+
+        // Tidak punya anak
+        if (root->left == NULL && root->right == NULL) {
+            delete root;
+            return NULL;
+        }
+
+        // Satu anak
+        else if (root->left == NULL) {
+            Pegawai* temp = root->right;
+            delete root;
+            return temp;
+        }
+
+        else if (root->right == NULL) {
+            Pegawai* temp = root->left;
+            delete root;
+            return temp;
+        }
+
+        // Dua anak
+        Pegawai* temp = cariMin(root->right);
+
+        root->id = temp->id;
+        root->nama = temp->nama;
+        root->jabatan = temp->jabatan;
+
+        root->right = hapusData(root->right, temp->id);
+    }
+
+    return root;
+}
+
 Pegawai* cariData(Pegawai* root, int id) {
     if (root == NULL || root->id == id)
         return root;
